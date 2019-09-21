@@ -41,24 +41,6 @@ const App = () => {
     }
   ])
 
-  function renderPage() {
-    console.log('activepage ' + activeIndex)
-    const pages = {
-      0: <HomePage cards={cards} />,
-      1: <section>Practice</section>,
-      2: <section>Bookmarks</section>,
-      3: (
-        <SettingsPage
-          cards={cards}
-          setCards={setCards}
-          setActiveIndex={setActiveIndex}
-        />
-      )
-    }
-
-    return pages[activeIndex] || <section>404</section>
-  }
-
   return (
     <>
       <GlobalStyles />
@@ -71,12 +53,29 @@ const App = () => {
       </AppStyled>
     </>
   )
+  function renderPage() {
+    console.log('activepage ' + activeIndex)
+    const pages = {
+      0: <HomePage cards={cards} />,
+      1: <section>Practice</section>,
+      2: <section>Bookmarks</section>,
+      3: <SettingsPage onFormSubmit={createCard} />
+    }
+
+    return pages[activeIndex] || <section>404</section>
+  }
+
+  function createCard(card) {
+    setCards([...cards, card])
+    setActiveIndex(0)
+  }
 }
 const AppStyled = styled.div`
   display: grid;
-  grid-template-rows: auto 48px;
-  height: 100vh;
+  grid-template-rows: 1fr 48px;
   font-family: sans-serif;
+  height: 100%;
+  width: 100%;
 `
 
 export default App

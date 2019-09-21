@@ -4,19 +4,35 @@ import Form from './Form'
 import Button from './Button'
 import Input from './Input'
 
-const SettingsPage = ({ cards, setCards, setActiveIndex }) => {
+const SettingsPage = ({ onFormSubmit }) => {
   const [newTitle, setNewTitle] = useState('')
+  const [errorTitle, setErrorTitle] = useState('')
   const [newQuestion, setNewQuestion] = useState('')
+  const [errorQuestion, setErrorQuestion] = useState('')
   const [newAnswer, setNewAnswer] = useState('')
+  const [errorAnswer, setErrorAnswer] = useState('')
+
+  /* onst [
+    { newTitle, newQuestion, newAnswer },
+    { setNewTitle, setNewQuestion, setNewAnswer }
+  ] = useState({ newTitle: '', newAnswer: '', newQuestion }, setNewValues) */
 
   const handleSubmit = event => {
     event.preventDefault()
-
-    setCards(...cards, {
-      title: newTitle,
-      question: newQuestion,
-      answer: newAnswer
-    })
+    newTitle.length || setErrorTitle('Bitte geben Sie einen Titel ein')
+    console.log('1')
+    newQuestion.length || setErrorQuestion('Bitte geben Sie eine Frage ein')
+    console.log('2')
+    newAnswer.length || setErrorAnswer('Bitte geben Sie eine Antwort ein')
+    console.log('3')
+    if (newTitle.length && newQuestion.length && newAnswer.length) {
+      console.log('form valid')
+      onFormSubmit({
+        title: newTitle,
+        question: newQuestion,
+        answer: newAnswer
+      })
+    }
   }
 
   return (
@@ -27,19 +43,22 @@ const SettingsPage = ({ cards, setCards, setActiveIndex }) => {
             value={newTitle}
             setValue={setNewTitle}
             label="Titel"
-            name="title"
+            errorText={errorTitle}
+            setErrorText={setErrorTitle}
           />
           <Input
             value={newQuestion}
             setValue={setNewQuestion}
             label="Frage"
-            name="question"
+            errorText={errorQuestion}
+            setErrorText={setErrorQuestion}
           />
           <Input
             value={newAnswer}
             setValue={setNewAnswer}
             label="Antwort"
-            name="answer"
+            errorText={errorAnswer}
+            setErrorText={setErrorAnswer}
           />
           <Button text="Karte erstellen"></Button>
         </Form>

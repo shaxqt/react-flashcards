@@ -8,5 +8,10 @@ const Button = ({ text, type = 'submit' }) => {
 
 const ButtonStyled = styled.button`
   padding: ${props => props.padding || '10px'};
+  background: linear-gradient(21deg, #10abff, #1beabd);
+  border-radius: 9999em;
+  font-size: 1.15rem;
+  color: white;
+  font-weight: bold;
 `
 export default Button
